@@ -1,4 +1,8 @@
-FROM zixia/wine:6.0
+ARG TARGETARCH=amd64
+FROM zixia/wine:6.0 AS base-amd64
+FROM zixia/wine:arm64 AS base-arm64
+
+FROM base-${TARGETARCH} AS final
 
 USER root
 RUN apt update && apt install -y \
