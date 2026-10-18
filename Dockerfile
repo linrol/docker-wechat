@@ -5,7 +5,9 @@ FROM zixia/wine:arm64 AS base-arm64
 FROM base-${TARGETARCH} AS final
 
 USER root
-RUN apt update && apt install -y \
+RUN sed -i '/opensuse\.org/d' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null || true \
+  && rm -f /etc/apt/sources.list.d/*opensuse* \
+  && apt update && apt install -y \
     locales \
     mesa-utils \
     procps \
